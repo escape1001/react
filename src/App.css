@@ -2,6 +2,4 @@
 html, body{margin:0;padding:0;}
 ul{list-style:none;}
 a:link, a:visited{text-decoration:none;}
-.App{width:100%; display:flex;}
-
-.thumb{padding:20px; border:1px solid #efefef;}
+.App{width:100%;}
