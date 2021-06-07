@@ -1,28 +1,54 @@
 import React from "react";
-//import './App.css';
+import axios from "axios";
+import './App.css';
 import PropTypes from 'prop-types';
+import Movie from "./Movie";
 
 
 class App extends React.Component{
     state = {
-        count : 0
+        isLoading : true,
+        movies : []
     };
     
-    add = () => {
-        this.setState(current => ({count : current.count+1}));
-    };
-    minus = () => {
-        this.setState(current => ({count : current.count-1}));
-        //this.setState({count:this.state.count-1});
+    getMovies = async () => {
+        const {data:{data:{movies}}} = await axios.get("https://yts-proxy.now.sh/list_movies.json?sort_by=rating");
+        
+        //console.log(movies);
+        this.setState({movies:movies, isLoading:false});
+        // 하나는 state의 movies고 뒤는 axios의 movies임!
+        // 풀버전은 this.setState({movies:movies});
+        // 줄여쓰면 this.setState({movies});
     };
 
+    componentDidMount(){
+        this.getMovies();
+    }
+
     render(){
+        const {isLoading, movies} = this.state;
+
         return (
-            <div>
-                <h1>The number is {this.state.count}</h1>
-                <button onClick={this.minus}>Minus</button>
-                <button onClick={this.add}>Add</button>
-            </div>
+            <section className="container">
+                {isLoading ? (
+                    <div className="loader">
+                        <span className="loader_text">Loading...</span>
+                    </div>
+                ) : (
+                    <div className="movieArea">
+                        {movies.map(movie => (
+                        <Movie
+                            id={movie.id} 
+                            year={movie.year} 
+                            title={movie.title} 
+                            summary={movie.summary} 
+                            poster={movie.medium_cover_image}
+                            genres = {movie.genres}
+                        />
+                      ))}
+                    </div>                    
+                    )}
+            </section>
         );
     }
 }
