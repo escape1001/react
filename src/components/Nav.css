@@ -1,0 +1,6 @@
+.gnb{width:100%; padding:20px 0; background-color:lightcoral;}
+.gnb ul{padding-right:50px; text-align:right;}
+.gnb li{display:inline; padding:0 20px;}
+.gnb a{color:#fff; font-size:20px;}
+
+.gnb a:hover{color:rgb(255, 228, 121);}
